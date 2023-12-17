@@ -1,8 +1,24 @@
 const express=require('express');
+const mogoDB=require('./src/config/db')
+const bodyPasrser=require('body-parser');
+const user=require('./src/models/user-model')
 const app=express();
-app.get('/',(req,res)=>{
-    res.send('all things are fine')
+app.use(bodyPasrser.urlencoded({extended:true}));
+
+app.post('/api',async(req,res)=>{
+    const u=await user.create(req.body);
+    res.json({
+        data:u
+    })
 })
-app.listen('3000',()=>{
+app.get('/api',async(req,res)=>{
+    const u=await user.find();
+    res.json({
+        data:u
+    })
+})
+
+app.listen('3000',async()=>{
+    await mogoDB();
     console.log('server is listening at 3000');
 })
