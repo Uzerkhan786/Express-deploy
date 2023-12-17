@@ -11,8 +11,11 @@ app.post('/api',async(req,res)=>{
         data:u
     })
 })
-app.get('/',(req,res)=>{
-    res.send('Server is deployed')
+app.get('/',async(req,res)=>{
+    const u=await user.find();
+    res.json({
+        data:u
+    })
 })
 app.get('/api',async(req,res)=>{
     const u=await user.find();
